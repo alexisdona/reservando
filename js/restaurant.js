@@ -10,12 +10,8 @@ var Restaurant = function(id, nombre, rubro, ubicacion, horarios, imagen, califi
 }
 
 Restaurant.prototype.reservarHorario = function(horarioReservado) {
-    for (var i = 0; i < this.horarios.length; i++) {
-        if (this.horarios[i] === horarioReservado) {
-            this.horarios.splice(i, 1);
-            return;
-        }
-    }
+    this.horarios = this.horarios.filter(horario => horario !== horarioReservado);
+
 }
 
 Restaurant.prototype.calificar = function(nuevaCalificacion) {
@@ -23,22 +19,33 @@ Restaurant.prototype.calificar = function(nuevaCalificacion) {
         this.calificaciones.push(nuevaCalificacion);
     }
 }
+Restaurant.prototype.sumatoria = function(calificaciones) {
+    var sumatoria = 0;
+    for (var i = 0; i < this.calificaciones.length; i++) {
+        sumatoria += this.calificaciones[i]
+    }
+    return sumatoria;
+}
+Restaurant.prototype.promedio = function(calificaciones) {
+    var sumatoria = this.sumatoria(calificaciones);
+    var cantidadDeCalificaciones = calificaciones.length;
+    if (cantidadDeCalificaciones > 0) {
+        return sumatoria / cantidadDeCalificaciones;
+    } else {
+        return 0;
+    }
+}
+
 
 Restaurant.prototype.obtenerPuntuacion = function() {
-        if (this.calificaciones.length === 0) {
-            return 0;
-        } else {
-            var sumatoria = 0;
-            for (var i = 0; i < this.calificaciones.length; i++) {
-                sumatoria += this.calificaciones[i]
-            }
-            var promedio = sumatoria / this.calificaciones.length;
-            return Math.round(promedio * 10) / 10;
-        }
+    var promedio = this.promedio(this.calificaciones)
+    return Math.round(promedio * 10) / 10;
+
+}
 
 
-    }
-    //agrego este metodo para obtener los horarios del restaurant
+
+//agrego este metodo para obtener los horarios del restaurant
 Restaurant.prototype.obtenerHorarios = function() {
     return this.horarios;
 }
