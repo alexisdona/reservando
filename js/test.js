@@ -141,3 +141,70 @@ describe('Verificando la funcionalidad de obtener restaurantes', function() {
     });
 
 });
+
+describe('Verificando la funcionalidad de cálculo de precios para una reserva', function() {
+
+    it('Precio base: No hay descuento ni adicional por reserva para dos dia de semana fuera de horario concurrido', function() {
+        var precioBase = reservaPara2FueraDeHoraSinDescuento.calcularPrecioBase();
+        expect(precioBase).to.equal(1200);
+    });
+    it('Precio total: No hay descuento ni adicional por reserva para dos dia de semana fuera de horario concurrido', function() {
+        var precioTotal = reservaPara2FueraDeHoraSinDescuento.calcularPrecioTotal();
+        expect(precioTotal).to.equal(1200);
+    });
+    it('Precio base: Adicional del 5% por reservar para 2 en horario concurrido', function() {
+        var precioBase = reservaPara2EnHoraConcurrida.calcularPrecioBase();
+        expect(precioBase).to.equal(1200);
+    });
+
+    it('Precio total: Adicional del 5% por reservar para 2 en horario concurrido', function() {
+        var precioTotal = reservaPara2EnHoraConcurrida.calcularPrecioTotal();
+        expect(precioTotal).to.equal(1260);
+    });
+    it('Descuento del 15% por código DES15 + adicional del 5% por reservar para 2  en horario concurrido', function() {
+        var precioTotal = reservaPara2ConCodigoDeDescuentoDES15EnHorarioConcurrido.calcularPrecioTotal();
+        expect(precioTotal).to.equal(1080);
+    });
+    it('Descuento del 15% por código DES15 por reserva para 2  fuera de horario concurrido', function() {
+        var precioTotal = reservaPara2ConCodigoDeDescuentoDES15.calcularPrecioTotal();
+        expect(precioTotal).to.equal(1020);
+    });
+    it('Descuento de $200 por código DES200 por reserva para 2 fuera de horario concurrido', function() {
+        var precioTotal = reservaPara2ConCodigoDeDescuentoDES200.calcularPrecioTotal();
+        expect(precioTotal).to.equal(1000);
+    });
+
+    it('Descuento del 10% por código DES1 por reserva para 2 fuera de horario concurrido', function() {
+        var precioTotal = reservaPara2ConCodigoDeDescuentoDES1.calcularPrecioTotal();
+        expect(precioTotal).to.equal(600);
+    });
+
+    it('Descuento del 15% por  reserva para 8 fuera de horario concurrido', function() {
+        var precioTotal = reservaPara9.calcularPrecioTotal();
+        expect(precioTotal).to.equal(3825);
+    });
+
+    it('Descuento del 10% por  reserva para 7 fuera de horario concurrido', function() {
+        var precioTotal = reservaPara7.calcularPrecioTotal();
+        expect(precioTotal).to.equal(3150);
+    });
+
+    it('Descuento del 5% por  reserva para 6 fuera de horario concurrido', function() {
+        var precioTotal = reservaPara6.calcularPrecioTotal();
+        expect(precioTotal).to.equal(2850);
+    });
+
+    it('Adicional del 10% por por reserva para 2 en fin de semana fuera de horario concurrido', function() {
+        var precioTotal = reservaDeFinDeSemanaPara2FueraDeHorario.calcularPrecioTotal();
+        expect(precioTotal).to.equal(2200);
+    });
+    it('Adicional del 10% + adicional del 5% por por reserva para 2 en fin de semana dentro de horario concurrido', function() {
+        var precioTotal = reservaDeFinDeSemanaPara2EnHorarioConcurrido.calcularPrecioTotal();
+        expect(precioTotal).to.equal(2300);
+    });
+
+
+
+
+
+});
